@@ -4,7 +4,7 @@ from airflow.decorators import task
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 import pandas as pd
 import json
-
+from datetime import datetime
 import requests
 import logging
 
@@ -81,7 +81,8 @@ with DAG(
     start_date = datetime(2024,5,20),
     catchup=False,
     tags=['API'],
-    schedule = '30 6 * * *'
+    # 매주 토요일 오전 6시 30분에 실행
+    schedule = '30 6 * * 6'
 ) as dag:
     url = "https://restcountries.com/v3.1/all"
     results = get_country_info(url)
